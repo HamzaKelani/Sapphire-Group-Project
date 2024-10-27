@@ -2,9 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import openai
+import os as os
+from openai import OpenAI
 
 # Set up OpenAI API key
-openai.api_key = 'APIkey'
+openai.api_key = os.environ["OPENAI_API_KEY"]
+client = OpenAI()
 
 # Header and Sidebar
 st.sidebar.markdown("# Prototype Demonstration #2")
@@ -18,21 +21,28 @@ st.subheader('Functional Feature #1: Chatbot!', divider='grey')
 
 # Function to get chatbot response from OpenAI
 def get_chatbot_response(user_input):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
+        temperature=0,
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": user_input}
+            {
+                "role": "system",
+                "content": "Using a student’s SAI score as input, provide a list of eligible grants, including the grant name, description, eligibility criteria, award amount, and application deadlines. Consider federal, state, and private grants, tailoring results to the financial need indicated by the SAI score. Act as if you only operate in California. Please add a link to each grant website at the bottom of the message."
+            },
+            {
+                "role": "user",
+                "content": "prompt"
+            }
         ]
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
 
 # Initialize conversation history
 if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 
 # ChatGPT-like chat interface
-user_input = st.chat_input("Ask the assistant anything about grant administration:")
+user_input = st.chat_input("Input your SAI score, and in return receive a list of grants you are eligible to receive:")
 if user_input:
     # Add user message to the chat history
     st.session_state['messages'].append({"role": "user", "content": user_input})
