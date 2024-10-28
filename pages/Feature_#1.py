@@ -42,7 +42,7 @@ if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 
 # ChatGPT-like chat interface
-user_input = st.chat_input("Input your SAI score, and in return receive a list of grants you are eligible to receive:")
+user_input = st.text_input("Input your SAI score, and in return receive a list of grants you are eligible to receive:")
 if user_input:
     # Add user message to the chat history
     st.session_state['messages'].append({"role": "user", "content": user_input})
