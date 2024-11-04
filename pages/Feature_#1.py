@@ -8,9 +8,12 @@ from openai import OpenAI
 # Set up OpenAI API key
 openai.api_key = os.environ["OPENAI_API_KEY"]
 client = OpenAI()
+colnames = ["keywords"]
+#data = pd.read_csv('AI_Grant.xlsx', nrows='3',encoding='Windows')
+#st.write(data.head())
 
 # Header and Sidebar
-st.sidebar.markdown("# Prototype Demonstration #2")
+st.sidebar.markdown("# Prototype Demonstration #1")
 
 message = "This page provides our first example for Prototype #1!\n"
 message += "Please let us know how we can improve this going forward. Thank you!"
@@ -42,7 +45,7 @@ if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 
 # ChatGPT-like chat interface
-user_input = st.text_input("Input your SAI score, and in return receive a list of grants you are eligible to receive:")
+user_input = st.selectbox("Choose your SAI score, and in return receive a list of grants you are eligible to receive:", options=["-15,000 -> -10,000", "-10,000 -> -5,000", "-5,000 -> 0", " 0 -> 2,000", "5,000 -> 10,000"])
 if user_input:
     # Add user message to the chat history
     st.session_state['messages'].append({"role": "user", "content": user_input})
