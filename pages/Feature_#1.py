@@ -15,7 +15,7 @@ client = OpenAI()
 # Header and Sidebar
 st.sidebar.markdown("# Prototype Demonstration #1")
 
-message = "This page provides our first example for Prototype #1!\n"
+message = "This page provides our first example for Prototype #2!\n"
 message += "Please let us know how we can improve this going forward. Thank you!"
 st.write(message)
 

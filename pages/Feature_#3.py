@@ -9,10 +9,8 @@ from openai import OpenAI
 openai.api_key = os.environ["OPENAI_API_KEY"]
 client = OpenAI()
 
-# Header and Sidebar
-st.sidebar.markdown("# Prototype Demonstration #3")
 
-message = "This page provides our 3rd feature for Prototype #1!\n"
+message = "This page provides our 3rd feature for Prototype #2!\n"
 message += "We help students improve their essay before submission, allowing them to have a better chance at landing the grant ahead of other students."
 st.write(message)
 
