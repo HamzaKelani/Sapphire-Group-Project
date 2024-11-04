@@ -8,7 +8,7 @@ from openai import OpenAI
 # Set up OpenAI API key
 openai.api_key = os.environ["OPENAI_API_KEY"]
 client = OpenAI()
-colnames = ["keywords"]
+
 #data = pd.read_csv('AI_Grant.xlsx', nrows='3',encoding='Windows')
 #st.write(data.head())
 

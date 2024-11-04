@@ -9,8 +9,13 @@ import os
 message = "This page provides our user with information regarding grants!\n"
 message += "Link a page from a notable grant, and receive a summary regarding who is eligible!"
 st.write(message)
+
+#data = pd.read_csv('AI_Grant.xlsx', nrows='3',encoding='Windows')
+#st.write(data.head())
+
 # Create a text input for the URL
-url = st.selectbox("Choose the URL you want to learn more about!", options=["https://www.csac.ca.gov/chafee", "https://www.csac.ca.gov/middle-class-scholarship", "https://www.csac.ca.gov/california-military-department-gi-bill-award-program", " https://www.csac.ca.gov/faforfirst", "https://fsapartners.ed.gov/knowledge-center/library/electronic-announcements/2018-11-19/general-subject-children-fallen-heroes-scholarship-act"])
+
+url =st.selectbox("Choose the URL you want to learn more about!", options=["https://www.csac.ca.gov/chafee", "https://www.csac.ca.gov/middle-class-scholarship", "https://www.csac.ca.gov/california-military-department-gi-bill-award-program", " https://www.csac.ca.gov/faforfirst", "https://fsapartners.ed.gov/knowledge-center/library/electronic-announcements/2018-11-19/general-subject-children-fallen-heroes-scholarship-act"])
 
 def get_web_content(url):
     # Fetch the webpage
