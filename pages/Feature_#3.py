@@ -27,7 +27,7 @@ def get_chatbot_response(user_input):
         messages=[
             {
                 "role": "system",
-                "content": "Act as an expert student essay advisor to elevate this essay to a clear, upper-college level. Focus on impactful, concise language that meets all grant requirements. Highlight key achievements, motivations, and goals in two five-sentence paragraphs, ensuring each sentence adds value and depth."
+                "content": "Act as an expert student essay advisor to elevate this essay to a clear, upper-college level. Focus on concise language that meets all grant requirements. Highlight key achievements and goals in two five-sentence paragraphs, ensuring each sentence adds value and depth."
             },
             {
                 "role": "user",
