@@ -20,6 +20,50 @@ st.write(message)
 
 st.subheader('Analyze Application', divider='grey')
 
+import openai
+import os
+
+# Set up OpenAI API key
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
+# Assuming `client` is initialized properly as your OpenAI client wrapper:
+client = openai
+
+def get_chatbot_response(user_input):
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        temperature=0,
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are an assistant that extracts information exactly as it appears in the provided text. "
+                    "Using the input below, identify and extract details precisely as they are written. "
+                    "If any detail is missing, omit it and do not assume or create information."
+                )
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Extract the following details from the text exactly as they appear:\n\n"
+                    f"{user_input}\n\n"
+                    "Required categories:\n"
+                    "1. Name\n"
+                    "2. Gender\n"
+                    "3. Age\n"
+                    "4. California School\n"
+                    "5. Major\n"
+                    "6. Race\n"
+                    "7. Ethnicity\n"
+                    "8. 'Tell us why you believe you deserve this grant. What experiences, skills, "
+                    "or challenges have shaped you, and how do these make you stand out as a candidate for our support?'"
+                    "\n\nPlease return the information in this format, strictly without creating or assuming details."
+                )
+            }
+        ]
+    )
+    return response.choices[0].message.content
+
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 
 if uploaded_file is not None:
@@ -30,50 +74,14 @@ if uploaded_file is not None:
     for i in range(len(pdf)):
         page = pdf.load_page(i)
         text = page.get_text("text")
+        
+        # Display original text
         st.write(f"Content of Page {i+1}:")
         st.write(text)
+        
+        # Generate and display summary for each page
+        summary = get_chatbot_response(text)
+        st.write(f"Summary of Page {i+1}:")
+        st.write(summary)
 
 st.subheader(' ', divider='grey')
-
-# Function to get chatbot response from OpenAI
-def get_chatbot_response(user_input):
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        temperature=0,
-        messages=[
-            {
-                "role": "system",
-                "content": "Using a student’s SAI score as input, provide a list of eligible grants, including the grant name, description, eligibility criteria, award amount, and application deadlines. Consider federal, state, and private grants, tailoring results to the financial need indicated by the SAI score. Act as if you only operate in California. Please add a link to each grant website at the bottom of the message."
-            },
-            {
-                "role": "user",
-                "content": "prompt"
-            }
-        ]
-    )
-    return response.choices[0].message.content
-
-# Initialize conversation history
-if 'messages' not in st.session_state:
-    st.session_state['messages'] = []
-
-# ChatGPT-like chat interface
-user_input = st.selectbox("Choose your SAI score, and in return receive a list of grants you are eligible to receive:", options=["-15,000 -> -10,000", "-10,000 -> -5,000", "-5,000 -> 0", " 0 -> 2,000", "5,000 -> 10,000"])
-if user_input:
-    # Add user message to the chat history
-    st.session_state['messages'].append({"role": "user", "content": user_input})
-    
-    # Get response from chatbot
-    response = get_chatbot_response(user_input)
-    
-    # Add assistant's response to the chat history
-    st.session_state['messages'].append({"role": "assistant", "content": response})
-
-# Display chat history in a ChatGPT-like UI
-for message in st.session_state['messages']:
-    if message['role'] == "user":
-        with st.chat_message("user"):
-            st.write(message['content'])
-    else:
-        with st.chat_message("assistant"):
-            st.write(message['content'])
