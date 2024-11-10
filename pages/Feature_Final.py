@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import openai
 import os as os
+import fitz  # PyMuPDF
 from openai import OpenAI
 
 # Set up OpenAI API key
@@ -12,15 +13,27 @@ client = OpenAI()
 xl = pd.ExcelFile("GrantedNow.xlsx")
 StudentDocs = xl.parse("Sheet1")
 
-# Header and Sidebar
-st.sidebar.markdown("# Prototype Demonstration #1")
+st.sidebar.markdown("GrantedNow!")
 
-message = "This page provides our first example for Prototype #2!\n"
-message += "Please let us know how we can improve this going forward. Thank you!"
+message = "Please let us know how we can improve this going forward. Thank you!"
 st.write(message)
 
-# Functional Feature #1: Chatbot (ChatGPT-style UI)
-st.subheader('Functional Feature #1: SAI Calculator!', divider='grey')
+st.subheader('Analyze Application', divider='grey')
+
+uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+
+if uploaded_file is not None:
+    # Load the PDF
+    pdf = fitz.open(stream=uploaded_file.read(), filetype="pdf")
+    
+    # Analyze the PDF
+    for i in range(len(pdf)):
+        page = pdf.load_page(i)
+        text = page.get_text("text")
+        st.write(f"Content of Page {i+1}:")
+        st.write(text)
+
+st.subheader(' ', divider='grey')
 
 # Function to get chatbot response from OpenAI
 def get_chatbot_response(user_input):
