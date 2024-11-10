@@ -9,8 +9,8 @@ from openai import OpenAI
 openai.api_key = os.environ["OPENAI_API_KEY"]
 client = OpenAI()
 
-xl = pd.ExcelFile("/Users/hamza/Sapphire-Group-Project/GrantedNow Data.csv")
-StudentDocs = xl.parse("Sheet 1")
+xl = pd.ExcelFile("GrantedNow.xlsx")
+StudentDocs = xl.parse("Sheet1")
 
 # Header and Sidebar
 st.sidebar.markdown("# Prototype Demonstration #1")
