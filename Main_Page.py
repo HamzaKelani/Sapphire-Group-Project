@@ -92,7 +92,7 @@ if chooseStudent:
     major = selectedStudentData['Major'].values[0]
     race = selectedStudentData['Race'].values[0]
     ethnicity = selectedStudentData['Ethnicity'].values[0]
-    grantReason = selectedStudentData['Tell us why you believe you deserve this grant. What experiences, skills, or challenges have shaped you, and how do these make you stand out as a candidate for our support?\n(2 Paragraphs, 6 Sentances Each)'].values[0]
+    grantReason = selectedStudentData['Tell us why you believe you deserve this grant. What experiences, skills, or challenges have shaped you, and how do these make you stand out as a candidate for our support?\n(1 Paragraphs, 6 Sentances Each)'].values[0]
     user_input = f"""
     Selected Student's Information:\n
     1. Name: {name}
