@@ -6,27 +6,22 @@ import os as os
 import fitz  # PyMuPDF
 from openai import OpenAI
 
+st.logo(
+    image="https://media.discordapp.net/attachments/1294022658974941299/1305343435472900166/image-removebg-preview_1.png?ex=6732af4f&is=67315dcf&hm=3c2a7d28157e3466cf73e1708798c0442d1f4b27616400d92386afa340279564&=&format=webp&quality=lossless&width=647&height=619")
+
 # Set up OpenAI API key
 openai.api_key = os.environ["OPENAI_API_KEY"]
 client = OpenAI()
 
 xl = pd.ExcelFile("GrantedNow.xlsx")
-StudentDocs = xl.parse("Sheet1")
+StudentDoc = xl.parse("Sheet1")
 
 st.sidebar.markdown("GrantedNow!")
 
-message = "Please let us know how we can improve this going forward. Thank you!"
-st.write(message)
-
+st.subheader('', divider='grey')
 st.subheader('Analyze Application', divider='grey')
 
-import openai
-import os
-
-# Set up OpenAI API key
 openai.api_key = os.environ["OPENAI_API_KEY"]
-
-# Assuming `client` is initialized properly as your OpenAI client wrapper:
 client = openai
 
 def get_chatbot_response(user_input):
@@ -65,23 +60,52 @@ def get_chatbot_response(user_input):
     return response.choices[0].message.content
 
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+text = ''
 
 if uploaded_file is not None:
-    # Load the PDF
     pdf = fitz.open(stream=uploaded_file.read(), filetype="pdf")
     
-    # Analyze the PDF
     for i in range(len(pdf)):
         page = pdf.load_page(i)
         text = page.get_text("text")
         
-        # Display original text
-        st.write(f"Content of Page {i+1}:")
+        st.markdown(f"<h3 style='font-size: 24px; font-weight: bold; text-decoration: underline;'>Content of Application:</h3>", unsafe_allow_html=True)
         st.write(text)
         
-        # Generate and display summary for each page
         summary = get_chatbot_response(text)
-        st.write(f"Summary of Page {i+1}:")
+        st.markdown(f"<h3 style='font-size: 24px; font-weight: bold; text-decoration: underline;'>Summary of Application:</h3>", unsafe_allow_html=True)
         st.write(summary)
 
-st.subheader(' ', divider='grey')
+st.subheader('', divider='grey')
+st.subheader('Compare Students', divider='grey')
+
+studentNames = StudentDoc[['Name']]
+chooseStudent = st.selectbox("Select a student to compare to:", studentNames)
+if chooseStudent:
+    # Print or display the selected student's data
+    selectedStudentData = StudentDoc[StudentDoc['Name'] == chooseStudent].iloc[[0]]
+    # Extract data from the selected student's row
+    name = selectedStudentData['Name'].values[0]
+    gender = selectedStudentData['Gender'].values[0]
+    age = selectedStudentData['Age'].values[0]
+    school = selectedStudentData['California School'].values[0]
+    major = selectedStudentData['Major'].values[0]
+    race = selectedStudentData['Race'].values[0]
+    ethnicity = selectedStudentData['Ethnicity'].values[0]
+    grantReason = selectedStudentData['Tell us why you believe you deserve this grant. What experiences, skills, or challenges have shaped you, and how do these make you stand out as a candidate for our support?\n(2 Paragraphs, 6 Sentances Each)'].values[0]
+    user_input = f"""
+    Selected Student's Information:\n
+    1. Name: {name}
+    2. Gender: {gender}
+    3. Age: {age}
+    4. California School: {school}
+    5. Major: {major}
+    6. Race: {race}
+    7. Ethnicity: {ethnicity}
+    8. Why: {grantReason}\n
+"""
+    
+st.write(user_input)
+
+st.subheader('', divider='grey')
+st.subheader('Decision Opinion', divider='grey')
