@@ -102,7 +102,7 @@ if chooseStudent:
     **Major:** {major}\n
     **Race:** {race}\n
     **Ethnicity:** {ethnicity}\n
-    **Why:** {grantReason}\n
+    **Why {name}?:** {grantReason}\n
 """
     
 st.write(user_input)
