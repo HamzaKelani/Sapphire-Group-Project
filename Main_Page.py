@@ -122,8 +122,8 @@ def get_decision_response(user_input):
                 "Using the input below, evaluate the student's eligibility based on the following categories: STEM Grant (based on major), Medical Grant (based on major), "
                 "Business Grant (based on major), UC School Grant (based on attendance at a UC school), CSU School Grant (based on attendance at a CSU school), and age grant (based on whether the student is over or under 24 years old). "
                 "For each grant, provide a clear response in this format:\n\n"
-                "\"**[Grant Type]:** Yes, this student appears to meet all of this grant's requirements.\"\n"
-                "\"**[Grant Type]:** No, this student does not seem to meet all of this grant's requirements.\"\n"
+                "\"**[Grant Type]:** Yes, this student appears to meet all of this grant's requirements.\"\n\n"
+                "\"**[Grant Type]:** No, this student does not seem to meet all of this grant's requirements.\"\n\n"
                 "\n\nDo not make a final decision or assume details that are not explicitly provided."
             )
         },
