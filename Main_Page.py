@@ -80,7 +80,7 @@ st.subheader('', divider='grey')
 st.subheader('Compare Students', divider='grey')
 
 studentNames = StudentDoc[['Name']]
-chooseStudent = st.selectbox("Select a student to compare to:", studentNames)
+chooseStudent = st.selectbox("**Select a student to compare to:**", studentNames)
 if chooseStudent:
     # Print or display the selected student's data
     selectedStudentData = StudentDoc[StudentDoc['Name'] == chooseStudent].iloc[[0]]
@@ -94,15 +94,15 @@ if chooseStudent:
     ethnicity = selectedStudentData['Ethnicity'].values[0]
     grantReason = selectedStudentData['Tell us why you believe you deserve this grant. What experiences, skills, or challenges have shaped you, and how do these make you stand out as a candidate for our support?\n(1 Paragraphs, 6 Sentances Each)'].values[0]
     user_input = f"""
-    Selected Student's Information:\n
-    1. Name: {name}
-    2. Gender: {gender}
-    3. Age: {age}
-    4. California School: {school}
-    5. Major: {major}
-    6. Race: {race}
-    7. Ethnicity: {ethnicity}
-    8. Why: {grantReason}\n
+    **Selected Student's Information:**\n
+    **Name:** {name}\n
+    **Gender:** {gender}\n
+    **Age:** {age}\n
+    **California School:** {school}\n
+    **Major:** {major}\n
+    **Race:** {race}\n
+    **Ethnicity:** {ethnicity}\n
+    **Why:** {grantReason}\n
 """
     
 st.write(user_input)
@@ -122,8 +122,8 @@ def get_decision_response(user_input):
                 "Using the input below, evaluate the student's eligibility based on the following categories: STEM Grant (based on major), Medical Grant (based on major), "
                 "Business Grant (based on major), UC School Grant (based on attendance at a UC school), CSU School Grant (based on attendance at a CSU school), and age grant (based on whether the student is over or under 24 years old). "
                 "For each grant, provide a clear response in this format:\n\n"
-                "\"[Grant Type]: Yes, this student appears to meet all of this grant's requirements.\"\n"
-                "\"[Grant Type]: No, this student does not seem to meet all of this grant's requirements.\"\n"
+                "\"**[Grant Type]:** Yes, this student appears to meet all of this grant's requirements.\"\n"
+                "\"**[Grant Type]:** No, this student does not seem to meet all of this grant's requirements.\"\n"
                 "\n\nDo not make a final decision or assume details that are not explicitly provided."
             )
         },
