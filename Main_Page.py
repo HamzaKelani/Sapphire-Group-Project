@@ -108,7 +108,7 @@ if chooseStudent:
 st.write(user_input)
 
 st.subheader('', divider='grey')
-st.subheader('Decision Opinion', divider='grey')
+st.subheader('Decision Suggestion', divider='grey')
 
 def get_decision_response(user_input):
     response = client.chat.completions.create(
