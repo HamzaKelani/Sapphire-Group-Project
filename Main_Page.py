@@ -6,8 +6,8 @@ import os as os
 import fitz  # PyMuPDF
 from openai import OpenAI
 
-st.image("https://ibb.co/1K1vrtd")
-st.logo(image="https://ibb.co/1K1vrtd")
+st.image("https://i.ibb.co/wCV0SFw/grantednow.png")
+st.logo(image="https://i.ibb.co/wCV0SFw/grantednow.png")
 
 # Set up OpenAI API key
 openai.api_key = os.environ["OPENAI_API_KEY"]
