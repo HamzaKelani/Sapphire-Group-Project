@@ -114,19 +114,24 @@ def get_decision_response(user_input):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         temperature=0,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "You are the ultimate decision maker on accepting someone to the grant program. You need to be extremely tough as there are only 4 spots, and based on the quality of the application you read, being in a STEM major, the age of the user and the believability of their"
-                    "circumstances, give a decision on if you would accept them or not. Write a 1 paragraph, 5 sentance response, and state at the start 'I would' or 'I would not' grant this student acceptance into the program."
-                )
-            },
-            {
-                "role": "user",
-                "content": (user_input)
-            }
-        ]
+        messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are an expert recruiter tasked with analyzing the provided information to determine whether the student meets the criteria for various grants. "
+                "Using the input below, evaluate the student's eligibility based on the following categories: STEM Grant (based on major), Medical Grant (based on major), "
+                "Business Grant (based on major), UC School Grant (based on attendance at a UC school), CSU School Grant (based on attendance at a CSU school), and age grant (based on whether the student is over or under 24 years old). "
+                "For each grant, provide a clear response in this format:\n\n"
+                "\"[Grant Type]: Yes, this student appears to meet all of this grant's requirements.\"\n"
+                "\"[Grant Type]: No, this student does not seem to meet all of this grant's requirements.\"\n"
+                "\n\nDo not make a final decision or assume details that are not explicitly provided."
+            )
+        },
+    {
+        "role": "user",
+        "content": (user_input)
+    }
+]
     )
     return response.choices[0].message.content
 
